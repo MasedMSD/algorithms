@@ -8,22 +8,6 @@ class Item(TypedDict):
     name: str
 
 
-print("Генерация 1 миллиона товаров...")
-
-n_products = 1000000
-sorted_products: list[Item] = [
-    {"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)
-]
-
-targets = {
-    "В начале": 1,
-    "В середине": 500000,
-    "В конце": 1000000,
-    "Случайный": random.randint(1, n_products),
-    "Отсутствует": n_products + 1,
-}
-
-
 def linear_search(arr: list[Item], target: int):
     n = len(arr)
 
@@ -118,23 +102,46 @@ algorithms = {
     "Интерполяц-й": interpolation_search,
 }
 
-results = {algo: {} for algo in algorithms}
 
-for algo_name, algo_func in algorithms.items():
-    for case_name, target_id in targets.items():
-        start_time = time.perf_counter()
-        algo_func(sorted_products, target_id)
-        end_time = time.perf_counter()
+def main() -> None:
+    print("Генерация 1 миллиона товаров...")
 
-        results[algo_name][case_name] = end_time - start_time
+    n_products = 1000000
+    sorted_products: list[Item] = [
+        {"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)
+    ]
 
-print("\n" + "=" * 83)
-print(
-    f"{'Алгоритм':<13} | {'В начале':<11} | {'В середине':<11} | {'В конце':<11} | {'Случайный':<11} | {'Отсутствует':<11}"
-)
+    targets = {
+        "В начале": 1,
+        "В середине": 500000,
+        "В конце": 1000000,
+        "Случайный": random.randint(1, n_products),
+        "Отсутствует": n_products + 1,
+    }
 
-for algo_name, times in results.items():
-    row_values = [f"{times[case_name]:.6f}s".ljust(11) for case_name in targets.keys()]
-    row = f"{algo_name:<13} | " + " | ".join(row_values)
-    print(row)
-print("=" * 83)
+    results = {algo: {} for algo in algorithms}
+
+    for algo_name, algo_func in algorithms.items():
+        for case_name, target_id in targets.items():
+            start_time = time.perf_counter()
+            algo_func(sorted_products, target_id)
+            end_time = time.perf_counter()
+
+            results[algo_name][case_name] = end_time - start_time
+
+    print("\n" + "=" * 83)
+    print(
+        f"{'Алгоритм':<13} | {'В начале':<11} | {'В середине':<11} | {'В конце':<11} | {'Случайный':<11} | {'Отсутствует':<11}"
+    )
+
+    for algo_name, times in results.items():
+        row_values = [
+            f"{times[case_name]:.6f}s".ljust(11) for case_name in targets.keys()
+        ]
+        row = f"{algo_name:<13} | " + " | ".join(row_values)
+        print(row)
+    print("=" * 83)
+
+
+if __name__ == "__main__":
+    main()
