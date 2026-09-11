@@ -1,10 +1,15 @@
+from typing import TypedDict
 import random
 import time
+
+class Item(TypedDict):
+  id: int
+  name: str
 
 print("Генерация 1 миллиона товаров...")
 
 n_products = 1000000
-sorted_products = [{"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)]
+sorted_products: list[Item] = [{"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)]
 
 targets = {
     "В начале": 1,
@@ -14,8 +19,7 @@ targets = {
     "Отсутствует": n_products + 1,
 }
 
-
-def linear_search(arr, target):
+def linear_search(arr: list[Item], target: int):
     n = len(arr)
 
     if n == 0:
@@ -31,10 +35,12 @@ def linear_search(arr, target):
     return -1
 
 
-def exponential_search(arr, target):
+def exponential_search(arr: list[Item], target: int):
     n = len(arr)
+
     if n == 0:
         return -1
+
     if arr[0]["id"] == target:
         return 0
 
@@ -44,6 +50,7 @@ def exponential_search(arr, target):
 
     low = i // 2
     high = min(i, n - 1)
+
     while low <= high:
         mid = (low + high) // 2
         if arr[mid]["id"] == target:
@@ -52,26 +59,31 @@ def exponential_search(arr, target):
             low = mid + 1
         else:
             high = mid - 1
+
     return -1
 
 
-def binary_search(arr, target):
+def binary_search(arr: list[Item], target: int):
     low = 0
     high = len(arr) - 1
+
     while low <= high:
         mid = (low + high) // 2
+
         if arr[mid]["id"] == target:
             return mid
         elif arr[mid]["id"] < target:
             low = mid + 1
         else:
             high = mid - 1
+
     return -1
 
 
-def interpolation_search(arr, target):
+def interpolation_search(arr: list[Item], target: int):
     low = 0
     high = len(arr) - 1
+
     while low <= high and target >= arr[low]["id"] and target <= arr[high]["id"]:
         if low == high:
             if arr[low]["id"] == target:

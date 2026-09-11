@@ -1,0 +1,5 @@
+[language]
+dictionaries = ["en", "ru"]
+
+[files]
+include = ["**/*.py"]
