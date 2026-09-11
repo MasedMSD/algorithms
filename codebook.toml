@@ -2,4 +2,4 @@
 dictionaries = ["en", "ru"]
 
 [files]
-include = ["**/*.py"]
+include = ["**/*.py", "**/*.md"]
