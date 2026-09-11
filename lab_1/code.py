@@ -1,15 +1,19 @@
-from typing import TypedDict
 import random
 import time
+from typing import TypedDict
+
 
 class Item(TypedDict):
-  id: int
-  name: str
+    id: int
+    name: str
+
 
 print("Генерация 1 миллиона товаров...")
 
 n_products = 1000000
-sorted_products: list[Item] = [{"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)]
+sorted_products: list[Item] = [
+    {"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)
+]
 
 targets = {
     "В начале": 1,
@@ -18,6 +22,7 @@ targets = {
     "Случайный": random.randint(1, n_products),
     "Отсутствует": n_products + 1,
 }
+
 
 def linear_search(arr: list[Item], target: int):
     n = len(arr)
