@@ -1,0 +1,45 @@
+name: 🧹 Format
+
+on:
+    push:
+        paths:
+            - "**/*.py"
+    pull_request:
+        branches:
+            - main
+        paths:
+            - "**/*.py"
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    format:
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@v7
+              with:
+                  ref: ${{ github.head_ref || github.ref_name }}
+
+            - name: 🐍 Setup Python
+              uses: actions/setup-python@v7
+              with:
+                  python-version: "3.12"
+
+            - name: 📦 Install Ruff
+              run: pip install ruff
+
+            - name: 🧹 Format Code
+              run: |
+                  ruff check --select I --fix .
+                  ruff format .
+
+            - name: 💾 Commit changes
+              uses: stefanzweifel/git-auto-commit-action@v7
+              with:
+                  commit_message: "chore: apply formatting changes"
