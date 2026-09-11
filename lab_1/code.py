@@ -2,6 +2,7 @@ import time
 import random
 
 print("Генерация 1 миллиона товаров...")
+
 n_products = 1000000
 sorted_products = [{"id": i, "name": f"Товар_{i}"} for i in range(1, n_products + 1)]
 
