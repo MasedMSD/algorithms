@@ -1,5 +1,2 @@
-[language]
-dictionaries = ["en", "ru"]
-
-[files]
-include = ["**/*.py", "**/*.md"]
+dictionaries = ["en_us", "ru"]
+include_paths = ["**/*.py", "**/*.md"]
