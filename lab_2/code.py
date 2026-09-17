@@ -37,6 +37,7 @@ def bubble_sort(arr: list[Item]) -> list[Item]:
 
 	return arr
 
+
 def insertion_sort(arr: list[Item]) -> list[Item]:
 	arr = arr[:]
 
