@@ -1,3 +1,5 @@
+# Completed
+
 import random
 import time
 from typing import TypedDict
