@@ -30,6 +30,21 @@ def longest_palindrome(s: str) -> int:
 	return length + 1 if has_odd else length
 
 
+def build_palindrome(s: str) -> str:
+	counts = Counter(s)
+
+	half: list[str] = []
+	middle = ""
+
+	for ch, count in counts.items():
+		half.append(ch * (count // 2))
+		if count % 2 == 1:
+			middle = ch
+
+	left = "".join(half)
+	return left + middle + left[::-1]
+
+
 def is_anagram(s: str, t: str) -> bool:
 	return Counter(s) == Counter(t)
 
@@ -57,7 +72,12 @@ def main() -> None:
 	for s, expected in palindrome_cases:
 		result = longest_palindrome(s)
 		label = s if len(s) <= 30 else f"{s[:15]}...({len(s)} симв.)"
-		print(f"{label}: {result} (ожидалось {expected}) {'OK' if result == expected else 'FAIL'}")
+		status = "OK" if result == expected else "FAIL"
+		if len(s) <= 30:
+			built = build_palindrome(s)
+			print(f"{label}: {result} (ожидалось {expected}) {status} | пример палиндрома: {built!r}")
+		else:
+			print(f"{label}: {result} (ожидалось {expected}) {status}")
 
 	print("\nD. Проверка анаграммы")
 	anagram_cases = [
