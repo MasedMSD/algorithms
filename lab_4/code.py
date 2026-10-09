@@ -74,6 +74,4 @@ if __name__ == "__main__":
 	start = input("Откуда: ").strip()
 	end = input("Куда: ").strip()
 	path = bfs(start, end)
-	print(
-		"Выход:", " -> ".join(path) if path else "Станции не связаны"
-	)
+	print("Выход:", " -> ".join(path) if path else "Станции не связаны")
