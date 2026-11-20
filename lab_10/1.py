@@ -1,32 +1,25 @@
-def max_robbery(houses):
-	if not houses:
-		return 0
-	if len(houses) == 1:
-		return houses[0]
+def min_operations(n):
+	dp = [0] * (n + 1)
 
-	dp = [0] * len(houses)
-	dp[0] = houses[0]
-	dp[1] = max(houses[0], houses[1])
+	for i in range(2, n + 1):
+		dp[i] = dp[i - 1] + 1
+		if i % 2 == 0:
+			dp[i] = min(dp[i], dp[i // 2] + 1)
+		if i % 3 == 0:
+			dp[i] = min(dp[i], dp[i // 3] + 1)
 
-	for i in range(2, len(houses)):
-		dp[i] = max(dp[i - 1], dp[i - 2] + houses[i])
-
-	return dp[-1]
-
-
-def run_tests():
-	tests = [
-		([1, 2, 3, 1], 4),  # 1 + 3 = 4
-		([2, 7, 9, 3, 1], 12),  # 2 + 9 + 1 = 12
-		([5, 1, 1, 5], 10),  # 5 + 5 = 10 (пропускаем два дома подряд)
-		([10], 10),  # один дом
-		([], 0),  # нет домов
-	]
-	for idx, (houses, expected) in enumerate(tests, 1):
-		result = max_robbery(houses)
-		status = "OK" if result == expected else "FAIL"
-		print(f"Тест {idx}: houses={houses} -> ответ: {result} (ожидалось: {expected}) [{status}]")
+	return dp[n]
 
 
 if __name__ == "__main__":
-	run_tests()
+	tests = [
+		(1, 0),
+		(5, 3),
+		(8, 3),
+		(10, 3),
+		(96234, 14),
+	]
+	for idx, (n, expected) in enumerate(tests, 1):
+		result = min_operations(n)
+		status = "OK" if result == expected else "FAIL"
+		print(f"Тест {idx}: n={n} -> ответ: {result} (ожидалось: {expected}) [{status}]")
